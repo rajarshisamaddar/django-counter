@@ -8,6 +8,8 @@ from .serializers import CounterSerializer
 @api_view(['GET'])
 def get_counter(request):
     counter_instance = Counter.objects.first()
+    if counter_instance is None:
+        counter_instance = Counter.objects.create(value=50)
     serializer = CounterSerializer(counter_instance)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
